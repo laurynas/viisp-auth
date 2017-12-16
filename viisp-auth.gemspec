@@ -19,6 +19,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'nokogiri-xmlsec-me-harder', '~> 0.9'
+  spec.add_dependency 'faraday'
+  spec.add_dependency 'faraday_middleware'
+  spec.add_dependency 'multi_xml'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'

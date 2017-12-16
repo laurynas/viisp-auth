@@ -13,6 +13,9 @@ RSpec.configure do |config|
 
   config.before do
     VIISP::Auth.configure do |c|
+      c.test = true
+      c.pid = 'VSID000000000113'
+      c.postback_url = 'https://localhost'
       c.client_cert = fixture('testCert.pem')
       c.client_private_key = fixture('testKey.pem')
     end

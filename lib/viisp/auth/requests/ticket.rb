@@ -12,7 +12,15 @@ module VIISP
 
         module_function
 
-        def build(pid:, providers:, attributes:, user_information:, postback_url:, custom_data:)
+        def build(
+          pid: configuration.pid,
+          providers: configuration.providers,
+          attributes: configuration.attributes,
+          user_information: configuration.user_information,
+          postback_url: configuration.postback_url,
+          custom_data: ''
+        )
+
           builder = Nokogiri::XML::Builder.new
 
           builder[:authentication].authenticationRequest(NAMESPACES) do
