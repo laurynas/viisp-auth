@@ -1,3 +1,4 @@
+require 'nokogiri'
 require 'viisp/auth/version'
 require 'viisp/auth/configuration'
 require 'viisp/auth/errors'
@@ -6,6 +7,7 @@ require 'viisp/auth/signing'
 require 'viisp/auth/requests/soap'
 require 'viisp/auth/requests/signature'
 require 'viisp/auth/requests/ticket'
+require 'viisp/auth/requests/identity'
 
 module VIISP
   module Auth
@@ -32,6 +34,12 @@ module VIISP
       xml = client.post(request)
       xml.remove_namespaces!
       xml.at('ticket')&.text
+    end
+
+    def identity(options = {})
+      request = Requests::Identity.new(options).build
+      xml = client.post(request)
+
     end
   end
 end

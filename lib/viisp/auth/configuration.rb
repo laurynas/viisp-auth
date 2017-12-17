@@ -24,6 +24,7 @@ module VIISP
         firstName
         lastName
         companyName
+        email
       ].freeze
 
       PRODUCTION_ENDPOINT = 'https://www.epaslaugos.lt/portal/authenticationServices/auth'

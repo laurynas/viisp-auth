@@ -5,7 +5,6 @@ RSpec.describe VIISP::Auth::Requests::Ticket, '#build' do
 
   let(:options) do
     {
-      pid: pid,
       providers: providers,
       attributes: attributes,
       user_information: user_information,
@@ -14,7 +13,6 @@ RSpec.describe VIISP::Auth::Requests::Ticket, '#build' do
     }
   end
 
-  let(:pid) { 'VSID000000000113' }
   let(:providers) { %w[auth.lt.identity.card auth.lt.bank] }
   let(:attributes) { %w[lt-personal-code] }
   let(:user_information) { %w[firstName lastName] }
@@ -22,7 +20,6 @@ RSpec.describe VIISP::Auth::Requests::Ticket, '#build' do
   let(:custom_data) { 'correlationData' }
 
   it 'builds request' do
-    expect(subject).to include(pid)
     expect(subject).to include(providers.last)
     expect(subject).to include(attributes.last)
     expect(subject).to include(user_information.last)

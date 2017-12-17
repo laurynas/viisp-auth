@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'xmldsig'
-require 'nokogiri'
-
 module VIISP
   module Auth
     module Requests
@@ -10,17 +7,10 @@ module VIISP
         include Soap
         include Signature
 
-        NAMESPACES = {
-          'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/',
-          'xmlns:authentication' => 'http://www.epaslaugos.lt/services/authentication',
-          'xmlns:ds' => 'http://www.w3.org/2000/09/xmldsig#',
-        }.freeze
-
         NODE_ID = 'uniqueNodeId'
 
-        def initialize(pid: nil, providers: nil, attributes: nil, user_information: nil,
-                       postback_url: nil, custom_data: '')
-          @pid = pid || configuration.pid
+        def initialize(providers: nil, attributes: nil, user_information: nil, postback_url: nil,
+                       custom_data: '')
           @providers = providers || configuration.providers
           @attributes = attributes || configuration.attributes
           @user_information = user_information || configuration.user_information
@@ -30,7 +20,7 @@ module VIISP
 
         def build
           builder = Nokogiri::XML::Builder.new do |builder|
-            soap_envelope(builder, NAMESPACES) do
+            soap_envelope(builder) do
               build_request(builder)
             end
           end
@@ -42,7 +32,7 @@ module VIISP
 
         def build_request(builder)
           builder[:authentication].authenticationRequest(id: NODE_ID) do
-            builder.pid(@pid)
+            builder.pid(configuration.pid)
 
             @providers.each do |provider|
               builder.authenticationProvider(provider)

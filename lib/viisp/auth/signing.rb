@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'xmldsig'
+
 module VIISP
   module Auth
     module Signing
