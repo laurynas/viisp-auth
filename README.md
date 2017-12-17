@@ -10,16 +10,16 @@ gem 'viisp-auth'
 
 ## Usage
 
-To start authentication first you must get a ticket.
+Get an authentication ticket:
 
 ```ruby
 ticket = VIISP::Auth.ticket
 ```
 
-User should be redirected to authentication portal with ticket using http POST
-Example: https://jsfiddle.net/kmrzpqwk/1/
-
+Redirected user to authentication portal with ticket using http POST.
 `VIISP::Auth.portal_endpoint` is a convenience method to get portal URL.
+
+Redirect form for testing: https://jsfiddle.net/kmrzpqwk/
 
 After successful authentication identity data can be fetched once.
 
