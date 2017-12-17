@@ -12,7 +12,6 @@ RSpec.configure do |config|
     VIISP::Auth.configure do |c|
       c.test = true
       c.postback_url = 'https://localhost'
-      # c.private_key = OpenSSL::PKey::RSA.new(fixture('testKey.pem'))
     end
   end
 end

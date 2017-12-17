@@ -3,6 +3,8 @@
 module VIISP
   module Auth
     class Configuration
+      CERTS_PATH = File.expand_path('../../../../certs', __FILE__).freeze
+
       DEFAULT_PROVIDERS = %w[
         auth.lt.identity.card
         auth.lt.bank
@@ -22,7 +24,7 @@ module VIISP
         firstName
         lastName
         companyName
-      ]
+      ].freeze
 
       PRODUCTION_ENDPOINT = 'https://www.epaslaugos.lt/portal/authenticationServices/auth'
       PRODUCTION_PORTAL_ENDPOINT = 'https://www.epaslaugos.lt/portal/external/services/authentication/v2/'
@@ -34,19 +36,17 @@ module VIISP
       DEFAULT_OPEN_TIMEOUT = 3
       DEFAULT_READ_TIMEOUT = 10
 
+      attr_writer :pid
+      attr_writer :postback_url
       attr_writer :test
       attr_writer :endpoint
       attr_writer :portal_endpoint
-
-      attr_writer :pid
-      attr_writer :postback_url
+      attr_writer :private_key
+      attr_writer :service_cert
 
       attr_accessor :providers
       attr_accessor :attributes
       attr_accessor :user_information
-
-      attr_accessor :private_key
-      attr_accessor :service_cert
 
       attr_accessor :read_timeout
       attr_accessor :open_timeout
@@ -63,12 +63,12 @@ module VIISP
       def pid
         return @pid if @pid
         return TEST_PID if test?
-
         raise('pid not configured')
       end
 
       def postback_url
-        @postback_url || raise('postback_url not configured')
+        @postback_url ||
+          raise('postback_url not configured')
       end
 
       def endpoint
@@ -86,8 +86,11 @@ module VIISP
       def private_key
         return @private_key if @private_key
         return test_private_key if test?
-
         raise('private key not configured')
+      end
+
+      def service_cert
+        @service_cert || builtin_service_cert
       end
 
       def test?
@@ -96,14 +99,21 @@ module VIISP
 
       private
 
-      def test_private_key
-        @test_private_key ||= OpenSSL::PKey::RSA.new(
-          File.read(test_private_key_path)
+      def builtin_service_cert
+        @builtin_service_cert ||= OpenSSL::X509::Certificate.new(
+          read_cert('epaslaugos_ident.crt')
         )
       end
 
-      def test_private_key_path
-        File.join(File.expand_path('../../../../certs', __FILE__), 'testKey.pem')
+      def test_private_key
+        @test_private_key ||= OpenSSL::PKey::RSA.new(
+          read_cert('testKey.pem')
+        )
+      end
+
+      def read_cert(filename)
+        path = File.join(CERTS_PATH, filename)
+        File.read(path)
       end
     end
   end
