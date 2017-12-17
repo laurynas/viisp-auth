@@ -1,4 +1,4 @@
-# Viisp::Auth
+# VIISP::Auth
 
 ## Installation
 
