@@ -5,10 +5,13 @@ require 'faraday'
 module VIISP
   module Auth
     class Client
-      def post(payload)
+      def post(document)
         with_error_handling do
-          response = connection.post('', payload)
-          response.body
+          request = Signing.sign(document)
+          response = connection.post('', request)
+          xml = Nokogiri::XML(response.body)
+          Signing.validate!(xml)
+          xml
         end
       end
 

@@ -29,13 +29,7 @@ module VIISP
 
     def ticket(options = {})
       request = Requests::Ticket.new(options).build
-      signed_request = Signing.sign(request)
-
-      response = client.post(signed_request)
-      xml = Nokogiri::XML(response)
-
-      Signing.validate!(xml)
-
+      xml = client.post(request)
       xml.remove_namespaces!
       xml.at('ticket')&.text
     end
