@@ -4,17 +4,10 @@ module VIISP
   module Auth
     module Requests
       module Soap
-        module_function
-
-        def build(body)
-          <<~XML
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-              <soapenv:Header/>
-              <soapenv:Body>          
-                #{body}           
-              </soapenv:Body>
-            </soapenv:Envelope>
-          XML
+        def soap_envelope(builder, namespaces)
+          builder[:soapenv].Envelope(namespaces) do
+            builder.Body { yield }
+          end
         end
       end
     end

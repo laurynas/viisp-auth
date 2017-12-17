@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe VIISP::Auth::Requests::Ticket, '.build' do
-  subject { described_class.build(options) }
+RSpec.describe VIISP::Auth::Requests::Ticket, '#build' do
+  subject { described_class.new(options).build.to_xml }
 
   let(:options) do
     {
@@ -28,7 +28,7 @@ RSpec.describe VIISP::Auth::Requests::Ticket, '.build' do
     expect(subject).to include(user_information.last)
     expect(subject).to include(postback_url)
     expect(subject).to include(custom_data)
-    expect(subject).to include('Signature')
+    expect(subject).to include('ds:Signature')
     expect(subject).to include('soapenv:Envelope')
   end
 end

@@ -27,6 +27,7 @@ module VIISP
       PRODUCTION_ENDPOINT = 'https://www.epaslaugos.lt/portal/authenticationServices/auth'
       PRODUCTION_PORTAL_ENDPOINT = 'https://www.epaslaugos.lt/portal/external/services/authentication/v2/'
 
+      TEST_PID = 'VSID000000000113'
       TEST_ENDPOINT = 'https://www.epaslaugos.lt/portal-test/services/AuthenticationServiceProxy'
       TEST_PORTAL_ENDPOINT = 'https://www.epaslaugos.lt/portal-test/external/services/authentication/v2/'
 
@@ -44,8 +45,7 @@ module VIISP
       attr_accessor :attributes
       attr_accessor :user_information
 
-      attr_accessor :client_cert
-      attr_accessor :client_private_key
+      attr_accessor :private_key
       attr_accessor :service_cert
 
       attr_accessor :read_timeout
@@ -61,7 +61,10 @@ module VIISP
       end
 
       def pid
-        @pid || raise('pid not configured')
+        return @pid if @pid
+        return TEST_PID if test?
+
+        raise('pid not configured')
       end
 
       def postback_url
@@ -80,8 +83,27 @@ module VIISP
         PRODUCTION_PORTAL_ENDPOINT
       end
 
+      def private_key
+        return @private_key if @private_key
+        return test_private_key if test?
+
+        raise('private key not configured')
+      end
+
       def test?
         @test
+      end
+
+      private
+
+      def test_private_key
+        @test_private_key ||= OpenSSL::PKey::RSA.new(
+          File.read(test_private_key_path)
+        )
+      end
+
+      def test_private_key_path
+        File.join(File.expand_path('../../../../certs', __FILE__), 'testKey.pem')
       end
     end
   end

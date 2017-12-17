@@ -1,7 +1,9 @@
 require 'viisp/auth/version'
 require 'viisp/auth/configuration'
 require 'viisp/auth/client'
+require 'viisp/auth/signing'
 require 'viisp/auth/requests/soap'
+require 'viisp/auth/requests/signature'
 require 'viisp/auth/requests/ticket'
 
 module VIISP
@@ -21,8 +23,10 @@ module VIISP
     end
 
     def ticket(options = {})
-      request = Requests::Ticket.build(options)
-      response = client.post(request)
+      request = Requests::Ticket.new(options).build
+      signed_request = Signing.sign(request)
+
+      response = client.post(signed_request)
 
       xml = Nokogiri::XML(response).remove_namespaces!
       xml.at('ticket')&.text
