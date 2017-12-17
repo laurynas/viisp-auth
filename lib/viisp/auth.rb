@@ -23,6 +23,10 @@ module VIISP
       @client ||= Client.new
     end
 
+    def portal_endpoint
+      configuration.portal_endpoint
+    end
+
     def ticket(options = {})
       request = Requests::Ticket.new(options).build
       signed_request = Signing.sign(request)
