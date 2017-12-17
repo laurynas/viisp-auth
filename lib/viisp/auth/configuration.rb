@@ -30,7 +30,7 @@ module VIISP
       TEST_ENDPOINT = 'https://www.epaslaugos.lt/portal-test/services/AuthenticationServiceProxy'
       TEST_PORTAL_ENDPOINT = 'https://www.epaslaugos.lt/portal-test/external/services/authentication/v2/'
 
-      DEFAULT_OPEN_TIMEOUT = 1
+      DEFAULT_OPEN_TIMEOUT = 3
       DEFAULT_READ_TIMEOUT = 10
 
       attr_writer :test
@@ -47,8 +47,6 @@ module VIISP
       attr_accessor :client_cert
       attr_accessor :client_private_key
       attr_accessor :service_cert
-      attr_accessor :signature_algorithm
-      attr_accessor :digest_algorithm
 
       attr_accessor :read_timeout
       attr_accessor :open_timeout
@@ -60,9 +58,6 @@ module VIISP
 
         @open_timeout = DEFAULT_OPEN_TIMEOUT
         @read_timeout = DEFAULT_READ_TIMEOUT
-
-        @signature_algorithm = 'rsa-sha1'
-        @digest_algorithm = 'sha1'
       end
 
       def pid
@@ -70,7 +65,7 @@ module VIISP
       end
 
       def postback_url
-        @pid || raise('postback_url not configured')
+        @postback_url || raise('postback_url not configured')
       end
 
       def endpoint

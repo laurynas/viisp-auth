@@ -7,16 +7,14 @@ module VIISP
         module_function
 
         def build(body)
-          <<~TEXT
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                    xmlns:aut="http://www.epaslaugos.lt/services/authentication"
-                    xmlns:xd="http://www.w3.org/2000/09/xmldsig#">
+          <<~XML
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
               <soapenv:Header/>
-              <soapenv:Body>
-                #{body}
+              <soapenv:Body>          
+                #{body}           
               </soapenv:Body>
             </soapenv:Envelope>
-          TEXT
+          XML
         end
       end
     end

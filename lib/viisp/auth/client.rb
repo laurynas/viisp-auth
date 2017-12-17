@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'faraday'
-require 'faraday_middleware'
 
 module VIISP
   module Auth
@@ -30,7 +29,6 @@ module VIISP
 
           builder.headers['Accept'] = 'application/xml'
 
-          builder.response :xml, content_type: /\bxml$/
           builder.response :raise_error
 
           builder.adapter Faraday.default_adapter

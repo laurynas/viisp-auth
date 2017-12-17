@@ -3,7 +3,6 @@ require 'viisp/auth/configuration'
 require 'viisp/auth/client'
 require 'viisp/auth/requests/soap'
 require 'viisp/auth/requests/ticket'
-require 'nokogiri-xmlsec'
 
 module VIISP
   module Auth
@@ -24,7 +23,9 @@ module VIISP
     def ticket(options = {})
       request = Requests::Ticket.build(options)
       response = client.post(request)
-      response.dig('Envelope', 'Body', 'authenticationResponse', 'ticket')
+
+      xml = Nokogiri::XML(response).remove_namespaces!
+      xml.at('ticket')&.text
     end
   end
 end
