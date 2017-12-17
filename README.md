@@ -1,5 +1,7 @@
 # VIISP::Auth
 
+VIISP identity service documentation: https://www.epaslaugos.lt/portal/content/1257
+
 ## Installation
 
 Add this line to your application's Gemfile:
