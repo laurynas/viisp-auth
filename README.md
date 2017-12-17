@@ -10,7 +10,34 @@ gem 'viisp-auth'
 
 ## Usage
 
-TODO: Write usage instructions here
+#### Get ticket
+
+```ruby
+ticket = VIISP::Auth.ticket
+```
+
+#### Redirect user
+
+Redirect user to authentication portal with ticket.
+
+```html
+<form id="login" action="<%= VIISP::Auth.portal_endpoint %>" method="post">
+  <input type="hidden" name="ticket" value="<%= @ticket %>">
+</form>
+<script type='text/javascript'>
+  document.getElementById('login').submit();
+</script>
+```
+
+Sample form: https://jsfiddle.net/kmrzpqwk/1/
+
+#### Get identity
+
+After successful authentication identity data can be fetched once.
+
+```ruby
+identity_data = VIISP::Auth.ticket(ticket: ticket)
+```
 
 ## Contributing
 
