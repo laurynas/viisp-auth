@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.epaslaugos.lt/services/authentication" elementFormDefault="qualified"
+  xmlns="http://www.epaslaugos.lt/services/authentication">
+
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd" />
+  <xs:import namespace="http://www.w3.org/2001/10/xml-exc-c14n#" schemaLocation="exc-c14n.xsd"/>
+
+  <xs:element name="authenticationRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pid" type="xs:string" />
+        <xs:element name="serviceTarget" type="serviceTarget" minOccurs="0" />
+        <xs:element name="authenticationProvider" type="authenticationProvider" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="authenticationAttribute" type="authenticationAttribute" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="userInformation" type="userInformation" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="postbackUrl" type="xs:anyURI" minOccurs="0" />
+        <xs:element name="customData" type="xs:string" minOccurs="0" />
+        <xs:element ref="dsig:Signature" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="authenticationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ticket" type="ticket" />
+        <xs:element ref="dsig:Signature" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="authenticationDataRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pid" type="xs:string" />
+        <xs:element name="ticket" type="ticket" />
+        <xs:element name="includeSourceData" type="xs:boolean" minOccurs="0" />
+        <xs:element ref="dsig:Signature" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="authenticationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="authenticationProvider" type="authenticationProvider" />
+        <xs:element name="authenticationAttribute" type="authenticationAttributePair" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="userInformation" type="userInformationPair" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="customData" type="xs:string" minOccurs="0" />
+        <xs:element name="sourceData" type="authenticationSourceData" minOccurs="0" />
+        <xs:element ref="dsig:Signature" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="invalidSignatureException" />
+  <xs:element name="invalidXmlException" />
+
+  <xs:complexType name="authenticationAttributePair">
+    <xs:sequence>
+      <xs:element name="attribute" type="authenticationAttribute" />
+      <xs:element name="value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="userInformationPair">
+    <xs:sequence>
+      <xs:element name="information" type="userInformation" />
+      <xs:element name="value">
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="stringValue" type="xs:string" />
+            <xs:element name="dateValue" type="xs:date" />
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="ticket">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="512" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="serviceTarget">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="citizen" />
+      <xs:enumeration value="business" />
+      <xs:enumeration value="provider" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="authenticationProvider">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="auth.login.pass" />
+      <xs:enumeration value="auth.lt.identity.card" />
+      <xs:enumeration value="auth.lt.government.employee.card" />
+      <xs:enumeration value="auth.lt.bank" />
+      <xs:enumeration value="auth.stork" />
+      <xs:enumeration value="auth.tsl.identity.card" />
+      <xs:enumeration value="auth.signatureProvider" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="authenticationAttribute">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="lt-personal-code" />
+      <xs:enumeration value="lt-company-code" />
+      <xs:enumeration value="lt-government-employee-code" />
+      <xs:enumeration value="stork-eid" />
+      <xs:enumeration value="tsl-serial-number" />
+      <xs:enumeration value="login" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="userInformation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="id" />
+      <xs:enumeration value="firstName" />
+      <xs:enumeration value="lastName" />
+      <xs:enumeration value="address" />
+      <xs:enumeration value="email" />
+      <xs:enumeration value="phoneNumber" />
+      <xs:enumeration value="birthday" />
+      <xs:enumeration value="companyName" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="authenticationSourceData">
+    <xs:sequence>
+      <xs:element name="type" type="authenticationSourceType" />
+      <xs:element name="parameter" type="authenticationSourceParameter" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="authenticationSourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SAML" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="authenticationSourceParameter">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

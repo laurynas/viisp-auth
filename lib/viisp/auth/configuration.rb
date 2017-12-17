@@ -63,12 +63,11 @@ module VIISP
       def pid
         return @pid if @pid
         return TEST_PID if test?
-        raise('pid not configured')
+        error('pid not configured')
       end
 
       def postback_url
-        @postback_url ||
-          raise('postback_url not configured')
+        @postback_url || error('postback_url not configured')
       end
 
       def endpoint
@@ -86,7 +85,7 @@ module VIISP
       def private_key
         return @private_key if @private_key
         return test_private_key if test?
-        raise('private key not configured')
+        error('private key not configured')
       end
 
       def service_cert
@@ -114,6 +113,10 @@ module VIISP
       def read_cert(filename)
         path = File.join(CERTS_PATH, filename)
         File.read(path)
+      end
+
+      def error(message)
+        raise(ConfigurationError, message)
       end
     end
   end

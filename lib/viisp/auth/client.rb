@@ -5,8 +5,6 @@ require 'faraday'
 module VIISP
   module Auth
     class Client
-      class Error < StandardError; end
-
       def post(payload)
         with_error_handling do
           response = connection.post('', payload)
@@ -19,7 +17,7 @@ module VIISP
       def with_error_handling
         yield
       rescue Faraday::ClientError => e
-        raise(Error, "#{e.message}. #{e.response}")
+        raise(RequestError, "#{e.message}. #{e.response}")
       end
 
       def connection

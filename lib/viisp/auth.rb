@@ -1,5 +1,6 @@
 require 'viisp/auth/version'
 require 'viisp/auth/configuration'
+require 'viisp/auth/errors'
 require 'viisp/auth/client'
 require 'viisp/auth/signing'
 require 'viisp/auth/requests/soap'
@@ -27,8 +28,11 @@ module VIISP
       signed_request = Signing.sign(request)
 
       response = client.post(signed_request)
+      xml = Nokogiri::XML(response)
 
-      xml = Nokogiri::XML(response).remove_namespaces!
+      Signing.validate!(xml)
+
+      xml.remove_namespaces!
       xml.at('ticket')&.text
     end
   end
