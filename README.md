@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/laurynas/viisp-auth.svg?branch=master)](https://travis-ci.org/laurynas/viisp-auth)
 
+Lithuanian E-Government Gateway "Elektroniniai valdžios vartai" identity service client.
+
 VIISP identity service documentation: https://www.epaslaugos.lt/portal/content/1257
 
 ## Installation
@@ -79,7 +81,7 @@ Identity example:
 
 ### Overriding configuration
 
-When fetching ticket you can override some configuration attributes
+When fetching ticket you can override some configuration attributes.
 
 ```ruby
 ticket = VIISP::Auth.ticket(

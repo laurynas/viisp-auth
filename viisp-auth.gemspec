@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ['laurynas.butkus@gmail.com']
 
   spec.summary = 'VIISP authentication client'
+  spec.description = 'Lithuanian E-Government Gateway "Elektroniniai valdžios vartai" identity service client.'
   spec.homepage = 'https://github.com/laurynas/viisp-auth'
   spec.license = 'MIT'
 
