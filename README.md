@@ -28,7 +28,31 @@ Redirect form for testing: https://jsfiddle.net/kmrzpqwk/
 After successful authentication identity data can be fetched once.
 
 ```ruby
-identity_data = VIISP::Auth.ticket(ticket: ticket)
+identity = VIISP::Auth.identity(ticket: ticket)
+```
+
+Identity example:
+
+```ruby
+{
+  "authentication_provider" => "auth.lt.bank",
+  "attributes" => {
+    "lt-personal-code" => "XXXXXXXXXXX"
+  },
+  "user_information" => {
+    "firstName" => "VARDENIS",
+    "lastName" => "PAVARDENIS",
+    "companyName" => nil
+  },
+  "custom_data" => "correlation-123",
+  "source_data" => {
+    "type" => "BANKLINK",
+    "parameters" => {
+      "VK_USER" => "12345678900",
+      "VK_TIME" => "08:57:29"
+    }
+  }
+}
 ```
 
 ## Contributing
