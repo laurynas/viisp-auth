@@ -3,6 +3,21 @@
 module VIISP
   module Auth
     class Configuration
+      attr_writer :pid
+      attr_writer :postback_url
+      attr_writer :private_key
+      attr_writer :service_cert
+      attr_writer :test
+      attr_writer :endpoint
+      attr_writer :portal_endpoint
+
+      attr_accessor :providers
+      attr_accessor :attributes
+      attr_accessor :user_information
+
+      attr_accessor :read_timeout
+      attr_accessor :open_timeout
+
       CERTS_PATH = File.expand_path('../../../../certs', __FILE__).freeze
 
       DEFAULT_PROVIDERS = %w[
@@ -18,13 +33,21 @@ module VIISP
       DEFAULT_ATTRIBUTES = %w[
         lt-personal-code
         lt-company-code
+        lt-government-employee-code
+        stork-eid
+        tsl-serial-number
+        login
       ].freeze
 
       DEFAULT_USER_INFORMATION = %w[
+        id
         firstName
         lastName
-        companyName
+        address
         email
+        phoneNumber
+        birthday
+        companyName
       ].freeze
 
       PRODUCTION_ENDPOINT = 'https://www.epaslaugos.lt/portal/authenticationServices/auth'
@@ -36,21 +59,6 @@ module VIISP
 
       DEFAULT_OPEN_TIMEOUT = 3
       DEFAULT_READ_TIMEOUT = 10
-
-      attr_writer :pid
-      attr_writer :postback_url
-      attr_writer :test
-      attr_writer :endpoint
-      attr_writer :portal_endpoint
-      attr_writer :private_key
-      attr_writer :service_cert
-
-      attr_accessor :providers
-      attr_accessor :attributes
-      attr_accessor :user_information
-
-      attr_accessor :read_timeout
-      attr_accessor :open_timeout
 
       def initialize
         @providers = DEFAULT_PROVIDERS
