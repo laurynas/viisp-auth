@@ -4,6 +4,7 @@ require 'viisp/auth/configuration'
 require 'viisp/auth/errors'
 require 'viisp/auth/client'
 require 'viisp/auth/signing'
+require 'viisp/auth/identity'
 require 'viisp/auth/requests/soap'
 require 'viisp/auth/requests/signature'
 require 'viisp/auth/requests/ticket'
@@ -31,15 +32,19 @@ module VIISP
 
     def ticket(options = {})
       request = Requests::Ticket.new(options).build
-      xml = client.post(request)
-      xml.remove_namespaces!
-      xml.at('ticket')&.text
+
+      doc = client.post(request)
+      doc.remove_namespaces!
+      doc.at('ticket')&.text
     end
 
     def identity(options = {})
       request = Requests::Identity.new(options).build
-      xml = client.post(request)
 
+      doc = client.post(request)
+      doc.remove_namespaces!
+
+      Identity.new(doc).to_hash
     end
   end
 end
