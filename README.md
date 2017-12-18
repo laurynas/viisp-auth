@@ -12,6 +12,24 @@ Add this line to your application's Gemfile:
 gem 'viisp-auth'
 ```
 
+## Configuration
+
+```ruby
+VIISP::Auth.configure do |c|
+  c.pid = '1234'
+  c.private_key = OpenSSL::PKey::RSA.new(File.read('your-private-key.pem'))
+  c.postback_url = 'https://localhost'
+
+  # optional
+  c.providers = %w[auth.lt.identity.card auth.lt.bank]
+  c.attributes = %w[lt-personal-code lt-company-code] 
+  c.user_information = %w[firstName lastName companyName email]
+
+  # enable test mode
+  c.test = true
+end
+```
+
 ## Usage
 
 Get an authentication ticket:
