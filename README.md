@@ -79,12 +79,13 @@ Identity example:
 }
 ```
 
-### Overriding configuration
+### Ticket arguments
 
-When fetching ticket you can override some configuration attributes.
+You can pass `custom_data` and override some configuration attributes when requesting ticket.
 
 ```ruby
 ticket = VIISP::Auth.ticket(
+  custom_data: 'custom data',
   postback_url: 'https://localhost',
   providers: %w[auth.lt.identity.card auth.lt.bank],
   attributes: %w[lt-personal-code lt-company-code],
