@@ -1,5 +1,7 @@
 # VIISP::Auth
 
+[![Build Status](https://travis-ci.org/laurynas/viisp-auth.svg?branch=master)](https://travis-ci.org/laurynas/viisp-auth)
+
 VIISP identity service documentation: https://www.epaslaugos.lt/portal/content/1257
 
 ## Installation
