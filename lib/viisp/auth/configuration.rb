@@ -40,7 +40,6 @@ module VIISP
       ].freeze
 
       DEFAULT_USER_INFORMATION = %w[
-        id
         firstName
         lastName
         address
