@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'viisp/auth'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   config.disable_monkey_patching!

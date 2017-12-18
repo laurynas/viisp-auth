@@ -5,8 +5,14 @@ RSpec.describe VIISP::Auth do
     expect(subject.portal_endpoint).not_to be_empty
   end
 
-  it 'gets ticket' do
-    expect(subject.ticket).not_to be_empty
+  describe '.ticket' do
+    before do
+      stub_request(:post, //).to_return(body: File.read('spec/fixtures/ticket.xml'))
+    end
+
+    it 'gets ticket' do
+      expect(subject.ticket).to eq('dfa1339f-46b6-457d-a21d-2d7680389bfd')
+    end
   end
 
   xit 'gets identity' do
