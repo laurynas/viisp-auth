@@ -26,6 +26,7 @@ VIISP::Auth.configure do |c|
   c.user_information = %w[firstName lastName companyName email]
 
   # enable test mode
+  # (in test mode there is no need to set pid and private_key)
   c.test = true
 end
 ```
@@ -46,7 +47,10 @@ Redirect form for testing: https://jsfiddle.net/kmrzpqwk/
 After successful authentication identity data can be fetched once.
 
 ```ruby
-identity = VIISP::Auth.identity(ticket: ticket)
+identity = VIISP::Auth.identity(
+  ticket: ticket,
+  include_source_data: true,
+)
 ```
 
 Identity example:
@@ -71,6 +75,19 @@ Identity example:
     }
   }
 }
+```
+
+### Overriding configuration
+
+When fetching ticket you can override some configuration attributes
+
+```ruby
+ticket = VIISP::Auth.ticket(
+  postback_url: 'https://localhost',
+  providers: %w[auth.lt.identity.card auth.lt.bank],
+  attributes: %w[lt-personal-code lt-company-code],
+  user_information: %w[firstName lastName companyName email],
+)
 ```
 
 ## Contributing
