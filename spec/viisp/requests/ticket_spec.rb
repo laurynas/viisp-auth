@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe VIISP::Auth::Requests::Ticket, '#build' do
-  subject { described_class.new(options).build.to_xml }
+  subject { described_class.new(**options).build.to_xml }
 
   let(:options) do
     {

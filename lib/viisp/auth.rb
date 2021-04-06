@@ -31,7 +31,7 @@ module VIISP
     end
 
     def ticket(options = {})
-      request = Requests::Ticket.new(options).build
+      request = Requests::Ticket.new(**options).build
 
       doc = client.post(request)
       doc.remove_namespaces!
@@ -39,7 +39,7 @@ module VIISP
     end
 
     def identity(options = {})
-      request = Requests::Identity.new(options).build
+      request = Requests::Identity.new(**options).build
 
       doc = client.post(request)
       doc.remove_namespaces!
