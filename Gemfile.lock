@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    viisp-auth (0.1.0)
+    viisp-auth (0.2.0)
       faraday
       nokogiri
       xmldsig (~> 0.6)
