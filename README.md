@@ -1,5 +1,6 @@
 # VIISP::Auth
 
+[![Gem Version](https://badge.fury.io/rb/viisp-auth.svg)](https://badge.fury.io/rb/viisp-auth)
 [![Build Status](https://travis-ci.org/laurynas/viisp-auth.svg?branch=master)](https://travis-ci.org/laurynas/viisp-auth)
 
 Lithuanian E-Government Gateway "Elektroniniai valdžios vartai" identity service client.
