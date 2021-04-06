@@ -54,11 +54,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler
   rake
   rspec (~> 3.0)
   viisp-auth!
   webmock
 
 BUNDLED WITH
-   1.17.3
+   2.2.15
