@@ -53,8 +53,8 @@ module VIISP
       PRODUCTION_PORTAL_ENDPOINT = 'https://www.epaslaugos.lt/portal/external/services/authentication/v2/'
 
       TEST_PID = 'VSID000000000113'
-      TEST_ENDPOINT = 'https://www.epaslaugos.lt/portal-test/services/AuthenticationServiceProxy'
-      TEST_PORTAL_ENDPOINT = 'https://www.epaslaugos.lt/portal-test/external/services/authentication/v2/'
+      TEST_ENDPOINT = 'https://test.epaslaugos.lt/services/services/auth'
+      TEST_PORTAL_ENDPOINT = 'https://test.epaslaugos.lt/portal/external/services/authentication/v2/'
 
       DEFAULT_OPEN_TIMEOUT = 3
       DEFAULT_READ_TIMEOUT = 10
@@ -108,7 +108,7 @@ module VIISP
 
       def builtin_service_cert
         @builtin_service_cert ||= OpenSSL::X509::Certificate.new(
-          read_cert('epaslaugos_ident.crt')
+          read_cert('epaslaugos_ident.cer')
         )
       end
 
